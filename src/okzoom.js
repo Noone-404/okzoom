@@ -160,8 +160,10 @@ $(function ($) {
             if (base.options.scrollContainer) {
                 $(base.options.scrollContainer).scroll(function (b) {
                     return function (e) {
-                        $.fn.okzoom.mouseout(b, null);
-                        $.fn.okzoom.build(b, null);
+                        if (parseInt($(b.loupe).css("opacity")) > 0) {
+                            $.fn.okzoom.mouseout(b, null);
+                            $.fn.okzoom.build(b, null);
+                        }
                     }
                 }(base));
             }
@@ -257,7 +259,7 @@ $(function ($) {
         base.initialized = true;
         $.fn.okzoom.mousemove(base, e);
         if (e && base.options.magnifierShown) {
-            base.options.magnifierShown();
+            base.options.magnifierShown(base);
         }
     };
 
@@ -307,7 +309,7 @@ $(function ($) {
 
         document.body.style.cursor = "auto";
         if (e && base.options.magnifierHidden) {
-            base.options.magnifierHidden();
+            base.options.magnifierHidden(base);
         }
     };
 
